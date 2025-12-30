@@ -70,18 +70,17 @@ export const cloneVoice = async (req, res) => {
     // 5️⃣ Upload generated audio to Cloudinary
     const cloudinary = (await import("../config/cloudinary.js")).default;
 
-    const uploadResult = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          folder: `voices/generated/${req.userId}`,
-          resource_type: "video"
-        },
-        (err, result) => {
-          if (err) reject(err);
-          else resolve(result);
-        }
-      ).end(audioBuffer);
-    });
+    const uploadResult = await cloudinary.uploader.upload(
+  generatedAudioPath,
+  {
+    resource_type: "video", // 🔥 REQUIRED FOR AUDIO
+    folder: `voxclone/generated/${req.userId}`,
+    format: "wav"
+  }
+);
+
+
+
 
     // 6️⃣ Save generation history
     await Generation.create({
