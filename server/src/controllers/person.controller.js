@@ -40,7 +40,7 @@ import path from "path";
 // import Person from "../models/Person.js";
 
 import cloudinary from "../config/cloudinary.js";
-import Person from "../models/Person.js";
+// import Person from "../models/Person.js";
 
 export const addPerson = async (req, res) => {
   try {
