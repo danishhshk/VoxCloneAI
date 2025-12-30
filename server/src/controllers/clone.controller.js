@@ -1,6 +1,7 @@
 import axios from "axios";
 import fs from "fs";
 import path from "path";
+import FormData from "form-data";
 import Person from "../models/Person.js";
 import Generation from "../models/Generation.js";
 
@@ -10,6 +11,8 @@ import Generation from "../models/Generation.js";
  * Auth: Required
  */
 export const cloneVoice = async (req, res) => {
+  let tempVoicePath;
+
   try {
     const { text, personId } = req.body;
 
@@ -22,27 +25,19 @@ export const cloneVoice = async (req, res) => {
 
     // 2️⃣ Find voice profile
     const person = await Person.findById(personId);
-    if (!person) {
+    if (!person || !person.voicePath) {
       return res.status(404).json({
         message: "Voice profile not found"
       });
     }
 
-    if (!person.voicePath) {
-      return res.status(404).json({
-        message: "Voice file not found"
-      });
-    }
-
-    // 3️⃣ Download voice from Cloudinary
-    const tempVoicePath = path.join(
+    // 3️⃣ Download voice from Cloudinary → temp file
+    tempVoicePath = path.join(
       process.cwd(),
       `voice_${Date.now()}.wav`
     );
 
-    const voiceResponse = await axios({
-      method: "GET",
-      url: person.voicePath,
+    const voiceResponse = await axios.get(person.voicePath, {
       responseType: "stream"
     });
 
@@ -53,46 +48,64 @@ export const cloneVoice = async (req, res) => {
       writer.on("error", reject);
     });
 
-    // 4️⃣ Call AI service (HF Space / XTTS)
+    // 4️⃣ Send MULTIPART request to AI service
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("voice", fs.createReadStream(tempVoicePath));
+
     const aiResponse = await axios.post(
-      process.env.AI_SERVICE_URL + "/clone",
+      `${process.env.AI_SERVICE_URL}/clone`,
+      formData,
       {
-        text,
-        voice_path: tempVoicePath
-      },
-      {
-        timeout: 120000 // 2 min (XTTS is heavy)
+        headers: formData.getHeaders(),
+        timeout: 180000 // XTTS on CPU is slow
       }
     );
 
-    const audioUrl = aiResponse.data.audioUrl;
+    // ⚠️ HF Space returns AUDIO FILE, not JSON
+    const audioBuffer = aiResponse.data;
 
-    if (!audioUrl) {
-      throw new Error("AI service failed to generate audio");
-    }
+    // 5️⃣ Upload generated audio to Cloudinary
+    const cloudinary = (await import("../config/cloudinary.js")).default;
 
-    // 5️⃣ Save generation history (optional but recommended)
+    const uploadResult = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: `voices/generated/${req.userId}`,
+          resource_type: "video"
+        },
+        (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        }
+      ).end(audioBuffer);
+    });
+
+    // 6️⃣ Save generation history
     await Generation.create({
       userId: req.userId,
       personId,
       text,
-      audioUrl,
+      audioUrl: uploadResult.secure_url,
       seconds: Math.ceil(text.length / 15)
     });
 
-    // 6️⃣ Cleanup temp file
-    fs.unlinkSync(tempVoicePath);
-
     // 7️⃣ Respond
-    res.status(200).json({
-      audioUrl
+    return res.status(200).json({
+      audioUrl: uploadResult.secure_url
     });
 
   } catch (err) {
-    console.error("CLONE ERROR:", err.message);
+    console.error("CLONE ERROR:", err);
 
     return res.status(500).json({
       message: "Voice generation failed"
     });
+
+  } finally {
+    // 8️⃣ Cleanup temp file (VERY IMPORTANT)
+    if (tempVoicePath && fs.existsSync(tempVoicePath)) {
+      fs.unlinkSync(tempVoicePath);
+    }
   }
 };
