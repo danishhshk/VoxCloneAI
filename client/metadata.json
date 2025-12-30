@@ -1,0 +1,7 @@
+{
+  "name": "VoxClone AI - Enterprise Voice Cloning SaaS",
+  "description": "A startup-grade SaaS frontend for high-fidelity AI voice cloning, featuring voice profile management, speech generation, and subscription workflows.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
