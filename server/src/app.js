@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import multer from "multer";
+import path from "path";
 
 import authRoutes from "./routes/auth.routes.js";
 import personRoutes from "./routes/person.routes.js";
@@ -13,9 +14,14 @@ import generationRoutes from "./routes/generation.routes.js";
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
+// app.use(cors());
 
 // Temporary
 app.use((req, res, next) => {
@@ -30,10 +36,7 @@ app.use("/api/clone", cloneRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/generation", generationRoutes);
-app.use(
-  "/uploads",
-  express.static(path.join(process.cwd(), "uploads"))
-);
+
 
 
 // Health check
