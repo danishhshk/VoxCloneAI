@@ -37,6 +37,8 @@ import path from "path";
  * Add new voice profile
  * POST /api/person/add
  */
+// import Person from "../models/Person.js";
+
 export const addPerson = async (req, res) => {
   try {
     const { name } = req.body;
@@ -47,6 +49,7 @@ export const addPerson = async (req, res) => {
 
     const person = await Person.create({
       name,
+      // ✅ IMPORTANT FIX
       voicePath: req.file.path,
       userId: req.userId
     });
@@ -57,6 +60,7 @@ export const addPerson = async (req, res) => {
     res.status(500).json({ message: "Failed to add voice profile" });
   }
 };
+
 
 /**
  * Get all voice profiles of logged-in user
