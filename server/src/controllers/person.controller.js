@@ -1,35 +1,3 @@
-// // import Person from "../models/Person.js";
-// // import User from "../models/User.js";
-
-// // export const addPerson = async (req, res) => {
-// //   const person = await Person.create({
-// //     name: req.body.name,
-// //     voicePath: req.file.path,
-// //     userId: req.userId
-// //   });
-
-// //   await User.findByIdAndUpdate(req.userId, {
-// //     $inc: { "usage.clonesCount": 1 }
-// //   });
-
-// //   res.json(person);
-// // };
-
-// import express from "express";
-// import auth from "../middleware/auth.middleware.js";
-// import {
-//   addPerson,
-//   getPersons
-// } from "../controllers/person.controller.js";
-
-// const router = express.Router();
-
-// router.post("/add", auth, addPerson);
-// router.get("/", auth, getPersons); // 👈 THIS WAS MISSING
-
-// export default router;
-
-
 import Person from "../models/Person.js";
 import path from "path";
 
