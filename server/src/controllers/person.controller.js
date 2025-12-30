@@ -39,27 +39,36 @@ import path from "path";
  */
 // import Person from "../models/Person.js";
 
+import cloudinary from "../config/cloudinary.js";
+import Person from "../models/Person.js";
+
 export const addPerson = async (req, res) => {
   try {
     const { name } = req.body;
 
     if (!req.file) {
-      return res.status(400).json({ message: "Voice file is required" });
+      return res.status(400).json({ message: "Voice file required" });
     }
+
+    const upload = await cloudinary.uploader.upload(req.file.path, {
+      folder: `voices/samples/${req.userId}`,
+      resource_type: "video"
+    });
 
     const person = await Person.create({
       name,
-      // ✅ IMPORTANT FIX
-      voicePath: req.file.path,
+      voicePath: upload.secure_url, // ✅ CLOUDINARY URL
       userId: req.userId
     });
 
     res.status(200).json(person);
+
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to add voice profile" });
+    res.status(500).json({ message: "Failed to add voice" });
   }
 };
+
 
 
 /**

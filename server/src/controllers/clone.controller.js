@@ -10,6 +10,8 @@ import Generation from "../models/Generation.js";
  * Body: { text, personId }
  * Auth: Required
  */
+console.log("AI_SERVICE_URL =", process.env.AI_SERVICE_URL);
+
 export const cloneVoice = async (req, res) => {
   let tempVoicePath;
 
