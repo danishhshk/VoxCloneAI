@@ -1,16 +1,10 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async (email, link) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  await transporter.sendMail({
-    from: "VoxClone AI <no-reply@voxclone.ai>",
+  await resend.emails.send({
+    from: "VoxClone AI <onboarding@resend.dev>", // or onboarding@resend.dev
     to: email,
     subject: "Verify your VoxClone AI account",
     html: `
