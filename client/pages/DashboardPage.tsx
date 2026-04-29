@@ -12,9 +12,16 @@ import { useAuth } from '../App';
 import { Link } from 'react-router-dom';
 import { getRecentGenerations } from '../services/generation';
 
+interface RecentGeneration {
+  _id: string;
+  text: string;
+  voiceName: string;
+  duration: number;
+}
+
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
-  const [recent, setRecent] = useState<any[]>([]);
+  const [recent, setRecent] = useState<RecentGeneration[]>([]);
 
   useEffect(() => {
     const loadRecent = async () => {
@@ -53,9 +60,9 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-500">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
           Welcome back, {user?.name.split(' ')[0]} 👋
         </h1>
         <p className="text-slate-500">
@@ -64,11 +71,11 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {stats.map((stat) => (
           <div
             key={stat.name}
-            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+            className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between mb-4">
               <div className={`${stat.bg} p-3 rounded-xl`}>
@@ -79,24 +86,24 @@ const DashboardPage: React.FC = () => {
               </span>
             </div>
             <p className="text-sm font-medium text-slate-500">{stat.name}</p>
-            <h3 className="text-3xl font-bold text-slate-900 mt-1">
+            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">
               {stat.value?.toLocaleString()}
             </h3>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         {/* Quick Actions */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-indigo-600 p-6 rounded-2xl text-white shadow-xl shadow-indigo-100">
+          <div className="bg-indigo-600 p-5 sm:p-6 rounded-2xl text-white shadow-xl shadow-indigo-100">
             <h3 className="text-lg font-bold mb-2">Create New Voice</h3>
             <p className="text-indigo-100 text-sm mb-6">
               Upload 30 seconds of high quality audio to start cloning.
             </p>
             <Link
               to="/voices"
-              className="inline-flex items-center gap-2 bg-white text-indigo-600 px-4 py-2 rounded-lg font-bold text-sm"
+              className="inline-flex items-center justify-center w-full sm:w-auto gap-2 bg-white text-indigo-600 px-4 py-2 rounded-lg font-bold text-sm"
             >
               <PlusCircle className="w-4 h-4" />
               Upload WAV
@@ -106,7 +113,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Recent Generations */}
         <div className="lg:col-span-2 bg-white rounded-2xl border shadow-sm overflow-hidden flex flex-col">
-          <div className="p-6 border-b flex justify-between">
+          <div className="p-4 sm:p-6 border-b flex justify-between items-center gap-3">
             <h3 className="font-bold flex items-center gap-2">
               <History className="w-5 h-5 text-indigo-600" />
               Recent Generations

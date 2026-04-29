@@ -69,12 +69,12 @@ const GeneratePage: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in fade-in slide-in-from-right-4 duration-500">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 animate-in fade-in slide-in-from-right-4 duration-500">
 
       {/* INPUT SECTION */}
       <div className="lg:col-span-8 space-y-6">
-        <div className="bg-white rounded-2xl border p-6 shadow-sm flex flex-col h-full">
-          <div className="flex justify-between mb-6">
+        <div className="bg-white rounded-2xl border p-4 sm:p-6 shadow-sm flex flex-col h-full">
+          <div className="flex justify-between mb-4 sm:mb-6">
             <h2 className="text-xl font-bold flex items-center gap-2">
               <Wand2 className="w-5 h-5 text-indigo-600" />
               Speech Generator
@@ -84,7 +84,7 @@ const GeneratePage: React.FC = () => {
             </button>
           </div>
 
-          <div className="space-y-6 flex-1 flex flex-col">
+          <div className="space-y-4 sm:space-y-6 flex-1 flex flex-col">
             <select
               value={selectedVoice}
               onChange={(e) => setSelectedVoice(e.target.value)}
@@ -101,13 +101,13 @@ const GeneratePage: React.FC = () => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Enter text to generate speech..."
-              className="flex-1 bg-slate-50 border rounded-2xl p-6 resize-none"
+              className="min-h-[220px] sm:min-h-[320px] lg:min-h-0 lg:flex-1 bg-slate-50 border rounded-2xl p-4 sm:p-6 resize-none"
             />
 
             <button
               onClick={handleGenerate}
               disabled={isGenerating || !text}
-              className="px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold flex items-center justify-center gap-3"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-indigo-600 text-white rounded-xl font-bold flex items-center justify-center gap-3"
             >
               {isGenerating ? (
                 <>
@@ -128,7 +128,7 @@ const GeneratePage: React.FC = () => {
       {/* RESULT + HISTORY */}
       <div className="lg:col-span-4 space-y-6">
         {result && (
-          <div className="bg-indigo-600 text-white rounded-2xl p-6 shadow-xl">
+          <div className="bg-indigo-600 text-white rounded-2xl p-4 sm:p-6 shadow-xl">
             <p className="text-sm mb-4 italic">"{result.text}"</p>
             <audio src={result.audioUrl} controls className="w-full" />
           </div>

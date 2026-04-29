@@ -118,29 +118,29 @@ const handleAction = async (plan: any) => {
 
 
   return (
-    <div className="max-w-6xl mx-auto space-y-12 py-8 animate-in fade-in duration-500">
+    <div className="max-w-6xl mx-auto space-y-8 sm:space-y-12 py-4 sm:py-8 animate-in fade-in duration-500">
       {/* Header */}
       <div className="text-center space-y-4">
-        <h1 className="text-4xl font-extrabold text-slate-900">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
           Simple, Transparent Pricing
         </h1>
-        <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+        <p className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto">
           Choose the plan that's right for your voice production needs.
           Scalability built-in.
         </p>
       </div>
 
       {/* Plans */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
         {plans.map((plan) => {
           const isCurrent = user?.plan === plan.backendPlan;
 
           return (
             <div
               key={plan.name}
-              className={`relative flex flex-col p-8 rounded-3xl border ${
+              className={`relative flex flex-col p-6 sm:p-8 rounded-3xl border ${
                 plan.popular
-                  ? 'border-indigo-200 shadow-2xl shadow-indigo-100 scale-105'
+                  ? 'border-indigo-200 shadow-2xl shadow-indigo-100 md:scale-105'
                   : 'border-slate-200 shadow-sm'
               } bg-white transition-all`}
             >
@@ -215,7 +215,7 @@ const handleAction = async (plan: any) => {
       </div>
 
       {/* Footer CTA */}
-      <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100 text-center">
+      <div className="bg-slate-50 rounded-3xl p-5 sm:p-8 border border-slate-100 text-center">
         <h4 className="font-bold text-slate-900 mb-2">
           Need a custom solution?
         </h4>

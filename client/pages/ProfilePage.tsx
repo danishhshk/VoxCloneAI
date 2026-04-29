@@ -17,10 +17,10 @@ const ProfilePage: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <h1 className="text-2xl font-bold text-slate-900">Account Settings</h1>
+    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Account Settings</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
 
         {/* Sidebar */}
         <div className="space-y-2">
@@ -56,7 +56,7 @@ const ProfilePage: React.FC = () => {
 
         {/* Content */}
         <div className="md:col-span-2 space-y-6">
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-8">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-8 shadow-sm space-y-6 sm:space-y-8">
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <div className="relative">
                 <div className="w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center border-4 border-white shadow-md overflow-hidden">
@@ -125,7 +125,7 @@ const ProfilePage: React.FC = () => {
           </div>
 
           {/* Security */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-8 shadow-sm">
             <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
               <Key className="w-5 h-5 text-indigo-600" />
               Security

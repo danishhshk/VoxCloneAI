@@ -38,6 +38,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 ======================= */
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import MobileBottomNav from "./components/MobileBottomNav";
 
 /* =======================
    AUTH CONTEXT
@@ -148,7 +149,7 @@ const App: React.FC = () => {
             />
             <div className="flex-1 flex flex-col overflow-hidden min-w-0">
               <Header onOpenMobileNav={() => setIsMobileNavOpen(true)} />
-              <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-8">
+              <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-8 pb-24 md:pb-8">
                 <Routes>
                   {/* USER ROUTES */}
                   <Route
@@ -221,6 +222,7 @@ const App: React.FC = () => {
                   <Route path="*" element={<Navigate to="/dashboard" />} />
                 </Routes>
               </main>
+              {user.role !== "ADMIN" && <MobileBottomNav />}
             </div>
           </div>
         ) : (

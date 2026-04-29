@@ -70,7 +70,7 @@ const VoicesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-6 sm:space-y-8 animate-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Voice Library</h1>
@@ -78,7 +78,7 @@ const VoicesPage: React.FC = () => {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold"
+          className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold w-full sm:w-auto"
         >
           <Plus className="w-5 h-5" />
           Add Voice
@@ -86,9 +86,9 @@ const VoicesPage: React.FC = () => {
       </div>
 
       {/* Voice Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {voices.map((voice) => (
-          <div key={voice.id} className="bg-white rounded-2xl border p-6 shadow-sm">
+          <div key={voice.id} className="bg-white rounded-2xl border p-4 sm:p-6 shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <div className="p-3 rounded-2xl bg-indigo-50">
                 <Mic2 className="w-6 h-6 text-indigo-600" />
@@ -112,13 +112,13 @@ const VoicesPage: React.FC = () => {
       {/* Upload Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="bg-white w-full max-w-lg rounded-2xl overflow-hidden">
-            <div className="p-6 border-b flex justify-between">
+          <div className="bg-white w-full max-w-lg rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+            <div className="p-4 sm:p-6 border-b flex justify-between">
               <h2 className="text-xl font-bold">Create Voice Model</h2>
               <button onClick={() => setIsModalOpen(false)}>✕</button>
             </div>
 
-            <div className="p-8 space-y-6">
+            <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
               <input
                 type="text"
                 placeholder="Voice name"
@@ -141,7 +141,7 @@ const VoicesPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-6 bg-slate-50 flex gap-3">
+            <div className="p-4 sm:p-6 bg-slate-50 flex gap-3">
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="flex-1 py-3 bg-white border rounded-xl"
