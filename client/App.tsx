@@ -82,9 +82,14 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    setIsMobileNavOpen(false);
+  }, [location.pathname]);
 
   /* 🔐 Restore session on refresh */
   useEffect(() => {
@@ -137,10 +142,13 @@ const App: React.FC = () => {
              AUTHENTICATED LAYOUT
           ======================= */
           <div className="flex h-screen overflow-hidden">
-            <Sidebar />
-            <div className="flex-1 flex flex-col overflow-hidden">
-              <Header />
-              <main className="flex-1 overflow-y-auto p-4 md:p-8">
+            <Sidebar
+              isMobileOpen={isMobileNavOpen}
+              onCloseMobile={() => setIsMobileNavOpen(false)}
+            />
+            <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+              <Header onOpenMobileNav={() => setIsMobileNavOpen(true)} />
+              <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-8">
                 <Routes>
                   {/* USER ROUTES */}
                   <Route

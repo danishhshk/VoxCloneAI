@@ -4,13 +4,23 @@ import { Bell, Search, Menu } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../App';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onOpenMobileNav: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onOpenMobileNav }) => {
   const { user } = useAuth();
 
   return (
-    <header className="h-20 bg-white border-b border-slate-200 px-8 flex items-center justify-between z-10">
+    <header className="h-16 sm:h-20 bg-white border-b border-slate-200 px-3 sm:px-5 md:px-8 flex items-center justify-between z-10">
       <div className="flex items-center gap-4 md:hidden">
-         <Menu className="w-6 h-6 text-slate-600" />
+         <button
+           onClick={onOpenMobileNav}
+           className="p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+           aria-label="Open menu"
+         >
+           <Menu className="w-6 h-6 text-slate-600" />
+         </button>
          <span className="font-bold text-lg text-indigo-600">VoxClone</span>
       </div>
 
@@ -30,13 +40,13 @@ const Header: React.FC = () => {
         <NavLink to="/enterprise" className="text-sm text-slate-600 hover:text-indigo-600">Enterprise</NavLink>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
         <button className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
           <Bell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
         </button>
         
-        <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
+        <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-4 md:pl-6 border-l border-slate-200">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-semibold text-slate-800">{user?.name}</p>
             <p className="text-xs text-indigo-600 font-medium capitalize">{user?.plan} Plan</p>

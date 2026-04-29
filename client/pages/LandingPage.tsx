@@ -44,7 +44,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
+      <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Waves className="text-indigo-600 w-8 h-8" />
           <span className="text-xl font-bold tracking-tight">VoxClone AI</span>
@@ -54,22 +54,22 @@ const LandingPage: React.FC = () => {
           <a href="#pricing" className="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Pricing</a>
           {/* <a href="#about" className="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Enterprise</a> */}
         </div>
-        <div className="flex items-center gap-4">
-          <Link to="/login" className="text-slate-700 hover:text-indigo-600 font-semibold px-4">Login</Link>
-          <Link to="/signup" className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-lg shadow-indigo-200 transition-all">Get Started</Link>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Link to="/login" className="text-slate-700 hover:text-indigo-600 font-semibold px-2 sm:px-4 text-sm sm:text-base">Login</Link>
+          <Link to="/signup" className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-semibold shadow-lg shadow-indigo-200 transition-all text-sm sm:text-base whitespace-nowrap">Get Started</Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-6 pt-20 pb-24 text-center">
+      <section className="container mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-16 sm:pb-24 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-sm font-semibold mb-8 animate-bounce">
           <Zap className="w-4 h-4" />
           <span>V3.0 Model Now Live — 99% Similarity</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight max-w-4xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight max-w-4xl mx-auto">
           Clone Any Voice with <span className="text-indigo-600 italic">Precision</span>
         </h1>
-        <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
           High-fidelity AI voice cloning for creators and enterprise. Create ultra-realistic speech from just 30 seconds of audio data.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -84,12 +84,12 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* Hero Image Mockup */}
-        <div className="mt-20 relative max-w-5xl mx-auto">
+        <div className="mt-12 sm:mt-20 relative max-w-5xl mx-auto">
             <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-3xl blur-3xl opacity-20"></div>
             <img 
                 src="https://picsum.photos/seed/voxclone/1200/600" 
                 alt="Product Dashboard Mockup" 
-                className="relative w-full h-[500px] object-cover rounded-2xl border border-slate-200 shadow-2xl"
+                className="relative w-full h-[260px] sm:h-[360px] md:h-[500px] object-cover rounded-2xl border border-slate-200 shadow-2xl"
             />
         </div>
       </section>

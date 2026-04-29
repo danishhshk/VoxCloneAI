@@ -9,11 +9,17 @@ import {
   UserCircle,
   Building2,
   LogOut,
-  Waves
+  Waves,
+  X
 } from 'lucide-react';
 import { useAuth } from '../App';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isMobileOpen: boolean;
+  onCloseMobile: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
   const { logout } = useAuth();
 
   const navItems = [
@@ -25,20 +31,30 @@ const Sidebar: React.FC = () => {
     { name: 'Profile', icon: UserCircle, path: '/profile' },
   ];
 
-  return (
-    <aside className="w-64 bg-white border-r border-slate-200 flex flex-col hidden md:flex">
-      <div className="p-6 flex items-center gap-3">
-        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
-          <Waves className="text-white w-6 h-6" />
+  const sidebarBody = (
+    <>
+      <div className="p-6 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+            <Waves className="text-white w-6 h-6" />
+          </div>
+          <span className="font-bold text-xl tracking-tight text-slate-800">VoxClone AI</span>
         </div>
-        <span className="font-bold text-xl tracking-tight text-slate-800">VoxClone AI</span>
+        <button
+          onClick={onCloseMobile}
+          className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 md:hidden"
+          aria-label="Close menu"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
-      <nav className="flex-1 px-4 space-y-1 mt-4">
+      <nav className="flex-1 px-4 space-y-1 mt-1 md:mt-4">
         {navItems.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={onCloseMobile}
             className={({ isActive }) => `
               flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
               ${isActive 
@@ -54,14 +70,38 @@ const Sidebar: React.FC = () => {
 
       <div className="p-4 mt-auto">
         <button
-          onClick={logout}
+          onClick={() => {
+            onCloseMobile();
+            logout();
+          }}
           className="flex items-center gap-3 w-full px-4 py-3 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200"
         >
           <LogOut className="w-5 h-5" />
           Logout
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      <aside className="w-64 bg-white border-r border-slate-200 hidden md:flex md:flex-col">
+        {sidebarBody}
+      </aside>
+
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <button
+            className="absolute inset-0 bg-slate-900/40"
+            onClick={onCloseMobile}
+            aria-label="Close sidebar backdrop"
+          />
+          <aside className="relative z-10 w-[85%] max-w-xs h-full bg-white border-r border-slate-200 flex flex-col">
+            {sidebarBody}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };
 
